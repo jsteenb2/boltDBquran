@@ -11,15 +11,15 @@ import (
 type Sura struct {
 	Name                string   `json:"sura_name"`
 	Number              int      `json:"sura_number"`
-	EgyptianChronoOrder int      `json:"-"`
-	NoldekeChronoOrder  int      `json:"-"`
-	NumberVerses        int      `json:"-"`
-	Location            string   `json:"-"`
-	Year                string   `json:"-"`
-	ArabicTitles        []string `json:"-"`
-	EnglishTitles       []string `json:"-"`
-	Topics              []string `json:"-"`
-	Ayaat               []Ayah   `json:"-"`
+	EgyptianChronoOrder int      `json:"egyptian_chrono_order"`
+	NoldekeChronoOrder  int      `json:"noldeke_chrono_order"`
+	NumberVerses        int      `json:"number_verses"`
+	Location            string   `json:"location"`
+	Year                string   `json:"year"`
+	ArabicTitles        []string `json:"arabic_titles"`
+	EnglishTitles       []string `json:"english_titles"`
+	Topics              []string `json:"topics"`
+	Ayaat               []Ayah   `json:"ayaat"`
 }
 
 func (s *Sura) AddDeets(deets *SuraDeets) {
