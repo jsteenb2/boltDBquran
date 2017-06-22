@@ -3,6 +3,7 @@ package models
 import (
 	"bytes"
 	"encoding/gob"
+	"log"
 
 	"github.com/boltdb/bolt"
 )
@@ -54,4 +55,32 @@ func (s *Sura) Save(db *bolt.DB, bucket []byte) error {
 		var surahNum = []byte{byte(s.Number)}
 		return b.Put(surahNum, data)
 	})
+}
+
+func GetSurah(bucket, surahNum []byte, db *bolt.DB) (*Sura, error) {
+	var sura *Sura
+	err := db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(bucket)
+		v := b.Get(surahNum)
+
+		var decodeErr error
+		sura, decodeErr = gobDecode(v)
+		if decodeErr != nil {
+			log.Println(decodeErr)
+			return decodeErr
+		}
+		return nil
+	})
+	return sura, err
+}
+
+func gobDecode(data []byte) (*Sura, error) {
+	var s *Sura
+	buf := bytes.NewBuffer(data)
+	dec := gob.NewDecoder(buf)
+	err := dec.Decode(&s)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
 }

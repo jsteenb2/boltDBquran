@@ -24,14 +24,8 @@ func main() {
 	defer db.Close()
 
 	// checkErr(BuildQuran(db, quranBucket))
-
-	db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(quranBucket)
-		v := b.Get([]byte{byte(2)})
-		surah, _ := gobDecode(v)
-		fmt.Printf("%v\n", surah.Ayaat[230])
-		return nil
-	})
+	sura, _ := m.GetSurah(quranBucket, []byte{byte(1)}, db)
+	fmt.Printf("its the fatihah\n%s", sura.Name)
 }
 
 func gobDecode(data []byte) (*m.Sura, error) {
