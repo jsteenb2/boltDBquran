@@ -3,6 +3,7 @@ package models
 import (
 	"bytes"
 	"encoding/gob"
+	"fmt"
 	"log"
 
 	"github.com/boltdb/bolt"
@@ -41,6 +42,10 @@ func (s Sura) gobEncode() ([]byte, error) {
 		return nil, err
 	}
 	return buf.Bytes(), nil
+}
+
+func (s *Sura) String() string {
+	return fmt.Sprintf("%d %s\nEgypt Order: %d\nNoldeke Order: %d\nNumber Verses: %d\nLocation: %s\nYear: %s", s.Number, s.Name, s.EgyptianChronoOrder, s.NoldekeChronoOrder, s.NumberVerses, s.Location, s.Year)
 }
 
 func (s *Sura) Save(db *bolt.DB, bucket []byte) error {
