@@ -2,7 +2,8 @@ package parser
 
 import (
 	"encoding/json"
-	m "quran/models"
+
+	m "github.com/jsteenb2/boltDBquran/models"
 )
 
 type QuranCollection [114]m.Sura

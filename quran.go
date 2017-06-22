@@ -7,8 +7,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	m "quran/models"
-	"quran/parser"
+
+	m "github.com/jsteenb2/boltDBquran/models"
+	"github.com/jsteenb2/boltDBquran/parser"
 
 	"github.com/boltdb/bolt"
 )
