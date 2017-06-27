@@ -11,13 +11,20 @@ import (
 	m "github.com/jsteenb2/boltDBquran/models"
 	"github.com/jsteenb2/boltDBquran/parser"
 
+	"os"
+
 	"github.com/boltdb/bolt"
 )
 
 var quranBucket = []byte("quran")
 
 func main() {
-	db, err := bolt.Open("/Users/jonathansteenbergen/go/src/quran/quran.db", 0644, nil)
+	dir, osErr := os.Getwd()
+	if osErr != nil {
+		log.Fatal(osErr)
+	}
+	fmt.Println(dir)
+	db, err := bolt.Open(dir+"/quran.db", 0644, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +32,7 @@ func main() {
 
 	// checkErr(BuildQuran(db, quranBucket))
 	sura, _ := m.GetSurah(quranBucket, []byte{byte(1)}, db)
-	fmt.Printf("its the fatihah\n%s", sura.Name)
+	fmt.Printf("%s", sura)
 }
 
 func gobDecode(data []byte) (*m.Sura, error) {
