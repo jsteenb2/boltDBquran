@@ -7,11 +7,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 
 	m "github.com/jsteenb2/boltDBquran/models"
 	"github.com/jsteenb2/boltDBquran/parser"
-
-	"os"
 
 	"github.com/boltdb/bolt"
 )
@@ -23,15 +22,17 @@ func main() {
 	if osErr != nil {
 		log.Fatal(osErr)
 	}
-	fmt.Println(dir)
+
 	db, err := bolt.Open(dir+"/quran.db", 0644, nil)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	defer db.Close()
 
-	// checkErr(BuildQuran(db, quranBucket))
-	sura, _ := m.GetSurah(quranBucket, []byte{byte(1)}, db)
+	sura, err := m.GetSurah(quranBucket, []byte{byte(1)}, db)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Printf("%s", sura)
 }
 
